@@ -1,49 +1,25 @@
 # netology_bot
 
-## create enviroment file .env with:
+## Перед началом работы нужно:
 
-bot_token = '{place bot token here}'
+### 1. Установить все зависимости из requirements.txt
 
-db_host = '{your database host}'
+### 2. Создать файл окружения .env со строками:
 
-db_port = '{database port}'
+bot_token = '{Токен бота}'
 
-db_database = '{your bot database}'
+db_host = '{Адрес СУБД (обычно localhost)}'
 
-db_user = '{database user}'
+db_port = '{Порт СУБД}'
 
-db_password = '{database user's password}'
+db_database = '{Имя базы данных}'
 
+db_user = '{Пользователь базы данных}'
 
-# create database 
-CREATE TABLE IF NOT EXISTS users (
-	id SERIAL PRIMARY KEY,
-	telegram_id INTEGER NOT NULL,
-    first_name VARCHAR(60),
-    last_name VARCHAR(60)
-);
+db_password = '{Пароль от пользователя}'
 
-CREATE TABLE IF NOT EXISTS admins (
-	id SERIAL PRIMARY KEY,
-    user_id INTEGER NOT NULL REFERENCES users(id)
-);
+### 3. Создать и заполнить базу данных:
 
-CREATE TABLE IF NOT EXISTS words (
-    id SERIAL PRIMARY KEY,
-    ru_word VARCHAR(60),
-    en_word VARCHAR(60)
-);
+В папке ./manage_db выполнить по очереди скрипты create_DB.py и fill_DB.py
 
-CREATE TABLE IF NOT EXISTS choices (
-    word_id INTEGER NOT NULL REFERENCES words(id),
-    choice1 VARCHAR(60),
-    choice2 VARCHAR(60),
-    choice3 VARCHAR(60),
-    choice4 VARCHAR(60)
-);
-
-CREATE TABLE IF NOT EXISTS user_words (
-	user_id INTEGER REFERENCES users(id),
-	word_id INTEGER REFERENCES words(id),
-	CONSTRAINT user_w PRIMARY KEY (user_id, word_id)
-);
+### 4. Запустить бота bot.py
