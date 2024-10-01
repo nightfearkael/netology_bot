@@ -1,3 +1,5 @@
+import time
+
 import telebot
 from telebot.handler_backends import State, StatesGroup
 from config import bot_token, emojis
@@ -140,4 +142,9 @@ def call_handler(call):
             bot.answer_callback_query(callback_query_id=call.id, text='Not registered')
 
 
-bot.polling()
+if __name__ == '__main__':
+    while True:
+        try:
+            bot.polling(none_stop=True)
+        except Exception as e:
+            time.sleep(3)
