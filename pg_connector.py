@@ -73,7 +73,6 @@ class Postgre:
         self.cursor.execute(sql_command, (word_id, choices[0].strip(), choices[1].strip(), choices[2].strip(), choices[3].strip(), ))
         self.connection.commit()
 
-
     def __del__(self):
         """
         Нужно для завершения сессии подключения к СУБД
