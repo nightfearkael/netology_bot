@@ -1,5 +1,4 @@
 from environs import Env
-from telebot.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 env = Env()
 env.read_env()
@@ -19,9 +18,8 @@ emojis = {
     'no': u"\u274C",
     'wave': u"\U0001F44B",
     'hug': u"\U0001F917",
-
+    'next': u"\u23ED",
+    'add_word': u"\u2795",
+    'del_word': u"\u2716",
 }
 
-reg_keyboard = InlineKeyboardMarkup()
-reg_keyboard.add(InlineKeyboardButton(text=f'{emojis["yes"]} Да', callback_data='register_yes'),
-                 InlineKeyboardButton(text=f'{emojis["no"]} Нет', callback_data='register_no'))

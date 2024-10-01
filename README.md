@@ -1,6 +1,7 @@
 # netology_bot
 
 ## create enviroment file .env with:
+
 bot_token = '{place bot token here}'
 
 db_host = '{your database host}'
@@ -39,4 +40,10 @@ CREATE TABLE IF NOT EXISTS choices (
     choice2 VARCHAR(60),
     choice3 VARCHAR(60),
     choice4 VARCHAR(60)
+);
+
+CREATE TABLE IF NOT EXISTS user_words (
+	user_id INTEGER REFERENCES users(id),
+	word_id INTEGER REFERENCES words(id),
+	CONSTRAINT user_w PRIMARY KEY (user_id, word_id)
 );
