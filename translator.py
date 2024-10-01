@@ -10,7 +10,3 @@ def translate(ru_word):
     translator = Translator()
     en_word = translator.translate(ru_word, src='ru', dest='en')
     return en_word.text.title()
-
-
-
-

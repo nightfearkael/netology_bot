@@ -5,7 +5,6 @@ from pg_connector import Postgre
 from translator import translate
 from replies import start_reply, help_reply
 from keyboards import generate_reg_keyboard, generate_word_keyboard, remove_keyboard
-import random
 
 bot = telebot.TeleBot(bot_token)
 pg_conn = Postgre()
@@ -139,13 +138,6 @@ def call_handler(call):
             bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
                                   text="Если захотите зарегистрироваться, введите снова /reg")
             bot.answer_callback_query(callback_query_id=call.id, text='Not registered')
-
-
-
-
-
-
-
 
 
 bot.polling()

@@ -15,7 +15,7 @@ db_user = '{database user}'
 db_password = '{database user's password}'
 
 
-
+# create database 
 CREATE TABLE IF NOT EXISTS users (
 	id SERIAL PRIMARY KEY,
 	telegram_id INTEGER NOT NULL,

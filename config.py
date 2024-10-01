@@ -22,4 +22,3 @@ emojis = {
     'add_word': u"\u2795",
     'del_word': u"\u2716",
 }
-
