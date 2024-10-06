@@ -26,15 +26,15 @@ def get_part_of_speech(en_word):
 
     for sentence in response.sentences():
         part = sentence.words[0].part_of_speech
-    match part:
-        case 'NN' | 'NNS' | 'NNP' | 'NNPS':
-            return 'nouns'
-        case 'VB' | 'VBD' | 'VBG' | 'VBN' | 'VBP' | 'VBZ':
-            return 'verbs'
-        case 'JJ' | 'JJR' | 'JJS':
-            return 'adjectives'
-        case _:
-            return None
+        match part:
+            case 'NN' | 'NNS' | 'NNP' | 'NNPS':
+                return 'nouns'
+            case 'VB' | 'VBD' | 'VBG' | 'VBN' | 'VBP' | 'VBZ':
+                return 'verbs'
+            case 'JJ' | 'JJR' | 'JJS':
+                return 'adjectives'
+            case _:
+                return None
 
 
 def gen_wrong_answers(en_word):
