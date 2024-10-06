@@ -4,7 +4,7 @@ import telebot
 from telebot.handler_backends import State, StatesGroup
 from config import bot_token, emojis
 from pg_connector import Postgre
-from translator import translate
+from translator import translate, gen_wrong_answers
 from replies import start_reply, help_reply
 from keyboards import generate_reg_keyboard, generate_word_keyboard, remove_keyboard
 
@@ -65,21 +65,15 @@ def add_new_word(new_word):
         if ru_word == en_word:
             bot.send_message(new_word.chat.id, 'Неправильно написано слово, либо я не нашел его перевода в словаре')
         else:
-            answers = bot.send_message(new_word.chat.id, f'''Перевод слова {emojis["ru_flag"]} {ru_word}: {emojis["en_flag"]} {en_word}
-Напишите через запятую еще 3 неправильных варианта перевода на {emojis["en_flag"]} английском языке''')
-            bot.register_next_step_handler(answers, add_wrong_answers, ru_word, en_word)
-
-
-def add_wrong_answers(answers, ru_word, en_word):
-    if len(answers.text.split(',')) >= 3:
-        choices = answers.text.split(',')[:3]
-        choices.append(en_word)
-        pg_conn.add_word(ru_word, en_word)
-        word_id = pg_conn.find_word_id(ru_word)
-        pg_conn.add_choices(word_id[0], choices)
-        bot.send_message(answers.chat.id, 'Слово добавлено в словарь')
-    else:
-        bot.send_message(answers.chat.id, 'Вы ввели недостаточно вариантов')
+            bot.send_message(new_word.chat.id, f'Перевод слова {emojis["ru_flag"]} {ru_word}: {emojis["en_flag"]} {en_word}')
+            choices = gen_wrong_answers(en_word)
+            choices.append(en_word)
+            pg_conn.add_word(ru_word, en_word)
+            word_id = pg_conn.find_word_id(ru_word)
+            pg_conn.add_choices(word_id[0], choices)
+            print(choices)
+            bot.send_message(new_word.chat.id, f'''Я добавил слово {emojis["ru_flag"]} {ru_word} в словарь с вариантами:
+{emojis["en_flag"]} {", ".join(choices)}''')
 
 
 @bot.message_handler(commands=['word'])

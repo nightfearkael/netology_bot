@@ -10,6 +10,8 @@ db_user = env('db_user')
 db_password = env('db_password')
 db_port = env('db_port')
 
+textrazor_api_key = env('textrazor_api_key')
+
 emojis = {
     'ru_flag': u"\U0001F1F7" + u"\U0001F1FA",
     'en_flag': u"\U0001F1FA" + u"\U0001F1F8",
