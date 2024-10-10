@@ -47,11 +47,12 @@ def register_message(message):
 
 @bot.message_handler(commands=['add_word'])
 def add_word_message(message):
-    if pg_conn.check_admin(message.from_user.id) is not None:
+    user = pg_conn.find_user(message.from_user.id)
+    if user is not None:
         new_word = bot.send_message(message.from_user.id, f'Какое {emojis["ru_flag"]} слово хотите добавить?')
         bot.register_next_step_handler(new_word, add_new_word)
     else:
-        bot.reply_to(message, 'Только администраторы могут обновлять словарь')
+        bot.send_message(message.from_user.id, 'Для начала нужно зарегистрироваться')
 
 
 def add_new_word(new_word):
@@ -116,8 +117,12 @@ def message_reply(message):
         if answer == target_word:
             bot.send_message(message.chat.id, f'Отлично! {emojis["ru_flag"]} {data["target_word"]} -> {emojis["en_flag"]} {data["translate_word"]}',
                              reply_markup=remove_keyboard())
+            send_next_word = True
         else:
-            bot.send_message(message.chat.id, f'Неправильно, попробуй еще раз вспомнить перевод {data["target_word"]}')
+            bot.send_message(message.chat.id, f'Неправильно, попробуй еще раз вспомнить перевод {emojis["ru_flag"]} {data["target_word"]}')
+            send_next_word = False
+    if send_next_word:
+        education(message)
 
 
 @bot.callback_query_handler(func=lambda call: True)

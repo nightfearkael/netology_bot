@@ -41,19 +41,6 @@ class Postgre:
         self.cursor.execute(sql_command, (telegram_id, first_name, last_name))
         self.connection.commit()
 
-    def check_admin(self, telegram_id):
-        """
-        Проверка, является ли пользователь администратором (для возможности добавления слов в словарь)
-        :param telegram_id: Telegram ID пользователя (из сообщения)
-        :return: None, если нет, tuple вида (id, ) при успехе
-        """
-        table = 'admins'
-        user_id = self.find_user(telegram_id)
-        sql_command = f"SELECT id FROM {table} WHERE user_id=(%s)"
-        self.cursor.execute(sql_command, (user_id[0], ))
-        result = self.cursor.fetchone()
-        return result
-
     def add_word(self, ru_word, en_word):
         """
         Добавление нового слова в словарь в таблицу words

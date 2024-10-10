@@ -16,10 +16,6 @@ commands = [
     first_name VARCHAR(60),
     last_name VARCHAR(60)
 );''',
-'''CREATE TABLE IF NOT EXISTS admins (
-	id SERIAL PRIMARY KEY,
-    user_id INTEGER NOT NULL REFERENCES users(id)
-);''',
     '''CREATE TABLE IF NOT EXISTS words (
     id SERIAL PRIMARY KEY,
     ru_word VARCHAR(60),
