@@ -101,12 +101,15 @@ def next_word(message):
 def user_add_word(message):
     with bot.retrieve_data(message.from_user.id, message.chat.id) as data:
         pg_conn.add_word_to_user(message.chat.id, data['target_word'])
+        bot.send_message(message.chat.id, f"Слово {emojis['ru_flag']} {data['target_word']} добавлено в твой словарь")
+        progress_message(message)
 
 
 @bot.message_handler(func=lambda message: message.text == f'Удалить слово {emojis["del_word"]}')
 def user_del_word(message):
     with bot.retrieve_data(message.from_user.id, message.chat.id) as data:
         pg_conn.del_word_from_user(message.chat.id, data['target_word'])
+        bot.send_message(message.chat.id, f"Слово {emojis['ru_flag']} {data['target_word']} удалено из твоего словаря")
 
 
 @bot.message_handler(func=lambda message: True, content_types=['text'])
